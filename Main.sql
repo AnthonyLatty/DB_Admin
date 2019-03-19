@@ -23,15 +23,11 @@ alter user Database_administration_2019 quota unlimited on USERS;
 
 -- 1
 create table Customer(
-  ID_number number primary key not null ,
+  ID_number number primary key not null,
   FirstName varchar(50),
   LastName varchar(50),
+  GenderID number references Gender(GenderID),
   DOB date
-);
-
-create table CustomerGender(
-  ID_number number references Customer(ID_number),
-  Gender varchar(10)
 );
 
 create table CustomerMobile(
@@ -63,12 +59,12 @@ create table Employee(
   FirstName varchar(20),
   LastName varchar(20),
   DOB date,
-  Gender char(1)
+  GenderID number references Gender(GenderID)
 );
 
-create table EmployeeGender(
-  TRN number references Employee(TRN),
-  Gender varchar(10)
+create table Gender(
+  GenderID number primary key not null,
+  GenderType char(1)
 );
 
 create table AuditData(
