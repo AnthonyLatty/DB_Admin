@@ -26,7 +26,7 @@ create table Customer(
   ID_number number primary key not null,
   FirstName varchar(50),
   LastName varchar(50),
-  GenderID number references Gender(GenderID),
+  Gender char(1),
   DOB date
 );
 
@@ -59,13 +59,9 @@ create table Employee(
   FirstName varchar(20),
   LastName varchar(20),
   DOB date,
-  GenderID number references Gender(GenderID)
+  Gender char(1)
 );
 
-create table Gender(
-  GenderID number primary key not null,
-  GenderType char(1)
-);
 
 create table AuditData(
   Audit_ID number primary key not null,
