@@ -51,8 +51,12 @@ create table Mail(
   DateDelivered date,
   Weight number,
   Status varchar(20),
-  Cost number
-);
+  Cost number)
+
+  partition by range (DateReceived) interval (numtoyminterval(1,'Month'))
+  (
+    partition p0 values less than (to_date('1-1-2030','DD-MM-YYYY'))
+  );
 
 create table Employee(
   TRN number(9) primary key not null,
@@ -74,13 +78,4 @@ create table LogReport(
   Log_name varchar(100),
   TIMESTAMP date
 );
-
-
-
-
-
-
-
-
-
 
