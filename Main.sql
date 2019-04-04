@@ -3,7 +3,7 @@
   Tutor: Ray Williams
 */
 
--- Setup config for IDE
+-- Setup config for IDE (Mac Users only)
 create user Database_administration_2019 identified by pass1234;
 
 grant connect to Database_administration_2019;
@@ -30,6 +30,16 @@ create table Customer(
   DOB date
 );
 
+create table Address(
+  ID_number number references Customer(ID_number),
+  AddressID number primary key not null,
+  Street_number number,
+  Street_name varchar(100),
+  Other_details varchar(250),
+  Parish varchar(50),
+  Postal_code number
+);
+
 create table CustomerMobile(
   ID_number number references Customer(ID_number),
   MobileNumber number
@@ -50,13 +60,18 @@ create table Mail(
   DateAssigned date,
   DateDelivered date,
   Weight number,
-  Status varchar(20),
+  StatusID number references Status(StatusID),
   Cost number)
 
   partition by range (DateReceived) interval (numtoyminterval(1,'Month'))
   (
     partition p0 values less than (to_date('1-1-2030','DD-MM-YYYY'))
   );
+
+create table Status(
+  StatusID number primary key not null,
+  StatusType varchar(20)
+);
 
 create table Employee(
   TRN number(9) primary key not null,
@@ -66,7 +81,7 @@ create table Employee(
   Gender char(1)
 );
 
-
+-- Additional Tables (These tables can vary depending on what we choose to work with)
 create table AuditData(
   Audit_ID number primary key not null,
   Audit_name varchar(100),
