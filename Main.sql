@@ -21,7 +21,7 @@ alter user Database_administration_2019 quota unlimited on USERS;
 
 -- Section A - Database Application Requirements
 
--- 1
+-- Question 1 & 2
 create table Customer(
   ID_number number primary key not null,
   FirstName varchar(50),
@@ -94,18 +94,14 @@ create table LogReport(
   TIMESTAMP date
 );
 
--------------------------------------------------------------------------------
-
----Number A3----
+-- Question 3
 
 -- Creation of roles, i granted the dba role to database_administration_2019 so the account can do everything 
 grant dba to database_administration_2019;
-
 connect database_administration_2019/pass1234
 
 
 -- Role creation number 3
-
 create role Viewing not identified; -- role for selecting tables
 
 create role Modification not identified; -- role for dml statments
@@ -113,7 +109,6 @@ create role Modification not identified; -- role for dml statments
 create role Administration not identified; -- role for admin purposes
 
 -- Privileges granted to Viewing role
-
 grant select on Customer to Viewing;
 
 grant select on CustomerMobile to Viewing;
@@ -156,16 +151,13 @@ grant CREATE Session to Administration with admin option;
 
 grant execute any procedure to Modification;
 
--------------------------------------------------------------------------------
 
------ Number A4------
-
+-- Question 4
 connect database_administration_2019/pass1234
--------------
--- Inserts --
--------------
--- insert into customer table
 
+-- Insert Stored Procedures
+
+-- Customer Table
 Create or replace procedure sp_insertCustomer(P_ID_number in number,P_FirstName in varchar,
   P_LastName in varchar, P_Gender in char, P_DOB in date)
 as
@@ -211,8 +203,7 @@ End sp_insertCustomer;
 --EXECUTE database_administration_2019.sp_insertCustomer(7,'WEDNESDAY','Check','M',TO_DATE('1996/03/05', 'yyyy/mm/dd '));
 
 
---insert into CustomerMobile
-
+-- CustomerMobile Table
 Create or replace procedure sp_insertCustomerMobile (P_ID_number in number,P_MobileNumber in number)
 as
 begin
@@ -251,9 +242,7 @@ End if;
 End sp_insertCustomerMobile;
 /
 
---insert into mailtype
-
-
+-- Mailtype Table
 Create or replace procedure sp_insertMailType (P_TypeID in number , P_Cost_per_pound in number,
   P_Name in varchar)
 as
@@ -293,9 +282,7 @@ End if;
 End sp_insertMailType;
 /
 
---insert into employee
-
- 
+-- Employee Table
  Create or replace procedure sp_insertEmployee(P_TRN in number ,P_FirstName in varchar2,P_LastName in varchar2,P_DOB in date, P_Gender in char)
 as
 begin
@@ -334,9 +321,7 @@ End if;
 End sp_insertEmployee;
 /
 
---insert into Address
-
- 
+-- Address Table 
  Create or replace procedure sp_insertAddress(P_ID_number in number,P_AddressID in number ,P_Street_number in number,
  P_Street_name in varchar ,P_Other_details in varchar,P_Parish in varchar,P_Postal_code in number)
 as
@@ -376,9 +361,7 @@ End if;
 End sp_insertAddress;
 /
 
---insert into Mail
-
- 
+-- Mail Table
  Create or replace procedure sp_insertMail(P_ID_number in number ,P_TypeID in number ,P_SenderID in number ,P_RecipientID in number,P_DateReceived in date, 
  P_DateAssigned in date, P_DateDelivered in date, P_Weight in number,P_StatusID in number )
 as
@@ -430,9 +413,7 @@ End sp_insertMail;
 /
 
 
---Insert to Status
-
-
+-- Status Table
 Create or replace procedure sp_insertStatus(P_StatusID in number ,P_StatusType in varchar)
 as
 begin
@@ -471,12 +452,10 @@ End if;
 End sp_insertStatus;
 /
 
-----------------------------------------
----Delete STOREPROCEDURES---------------
-----------------------------------------
 
----Delete from Status
+--- Delete Stored Procedures
 
+-- Delete from Status Table
 Create or replace procedure sp_DeleteStatus(P_StatusID in number)
 as
 begin
@@ -515,8 +494,8 @@ End if;
 End sp_DeleteStatus;
 /
 
----Delete from Customer
 
+-- Delete from Customer Table
 Create or replace procedure sp_DeleteCustomer(P_ID_number in number)
 as
 begin
@@ -556,8 +535,7 @@ End sp_DeleteCustomer;
 /
 
 
----Delete from Address
-
+-- Delete from Address Table
 Create or replace procedure sp_DeleteAddress(P_AddressID in number)
 as
 begin
@@ -598,8 +576,7 @@ End sp_DeleteAddress;
 
 
 
----Delete from CustomerMobile
-
+-- Delete from CustomerMobile Table
 Create or replace procedure sp_DeleteCustomerMobile(P_ID_number in number)
 as
 begin
@@ -639,8 +616,7 @@ End sp_DeleteCustomerMobile;
 /
 
 
----Delete from MailType
-
+-- Delete from MailType Table
 Create or replace procedure sp_DeleteMailType(P_TypeID in number)
 as
 begin
@@ -680,8 +656,7 @@ End sp_DeleteMailType;
 /
 
 
----Delete from Mail
-
+-- Delete from Mail Table
 Create or replace procedure sp_DeleteMail(P_ID_number in number)
 as
 begin
@@ -721,8 +696,7 @@ End sp_DeleteMail;
 /
 
 
----Delete from Employee
-
+-- Delete from Employee Table
 Create or replace procedure sp_DeleteEmployee(P_TRN in number)
 as
 begin
@@ -761,13 +735,9 @@ End if;
 End sp_DeleteEmployee;
 /
 
-------------------------
----UPDATE PROCEDURES----
-------------------------
+-- Update Stored Procedures
 
----Update to Customer
-
-
+-- Update to Customer Table
 Create or replace procedure sp_UpdateCustomer(P_ID_number in number,P_FirstName in varchar,
   P_LastName in varchar, P_Gender in char, P_DOB in date)
 as
@@ -824,8 +794,8 @@ End sp_UpdateCustomer;
 
 EXECUTE database_administration_2019.sp_UpdateCustomer(1,'Ryan','Newman','M',TO_DATE('1996/03/05', 'yyyy/mm/dd '));
 
-----UPDATE to customerMobile
 
+-- UPDATE to CustomerMobile Table
 Create or replace procedure sp_UpdateCustomerMobile (P_ID_number in number,P_MobileNumber in number)
 as
 begin
@@ -864,9 +834,9 @@ End if;
 End sp_UpdateCustomerMobile;
 /
 
--- update to mailtype
 
 
+-- Update to mailtype Table
 Create or replace procedure sp_UpdateMailType (P_TypeID in number , P_Cost_per_pound in number,
   P_Name in varchar)
 as
@@ -911,9 +881,10 @@ End if;
 End sp_UpdateMailType;
 /
 
---Update to employee
 
- 
+
+
+-- Update to Employee Table
  Create or replace procedure sp_UpdateEmployee(P_TRN in number ,P_FirstName in varchar2,P_LastName in varchar2,P_DOB in date, P_Gender in char)
 as
 begin
@@ -967,9 +938,8 @@ End if;
 End sp_UpdateEmployee;
 /
 
---insert into Address
 
- 
+-- insert into Address Table
  Create or replace procedure sp_UpdateAddress(P_ID_number in number,P_AddressID in number ,P_Street_number in number,
  P_Street_name in varchar ,P_Other_details in varchar,P_Parish in varchar,P_Postal_code in number)
 as
@@ -1034,9 +1004,8 @@ End if;
 End sp_UpdateAddress;
 /
 
---Update to Mail
 
- 
+-- Update to Mail Table
  Create or replace procedure sp_UpdateMail(P_ID_number in number ,P_TypeID in number ,P_SenderID in number ,P_RecipientID in number,P_DateReceived in date, 
  P_DateAssigned in date, P_DateDelivered in date, P_Weight in number,P_StatusID in number )
 as
@@ -1127,9 +1096,8 @@ End if;
 End sp_UpdateMail;
 /
 
---Update to Status
 
-
+-- Update to Status Table
 Create or replace procedure sp_UpdateStatus(P_StatusID in number ,P_StatusType in varchar)
 as
 begin
@@ -1168,12 +1136,10 @@ End if;
 End sp_UpdateStatus;
 /
 
-----------------------------------------------------------------------------------------------------------------------
 
----- Number A5-------
+-- Question 5
 
 -- Audit table for mail
-
 create table AuditMail(
   Audit_Number number primary key not null,
   Audit_User varchar2(50),
@@ -1207,7 +1173,6 @@ minvalue 1
 maxvalue 10000;
 
 --- TRIGGER---
-
 CREATE OR REPLACE TRIGGER tr_AfterUpdateDeleteMail
 AFTER UPDATE or Delete 
    ON database_administration_2019.mail
@@ -1218,11 +1183,10 @@ DECLARE
 
 BEGIN
 
-	--Find username of person performing UPDATE or delete on mail table--
+	-- Find username of person performing UPDATE or delete on mail table--
     SELECT user INTO v_username FROM dual;
    
-   --Insert record into audit table
-   
+   --I nsert record into audit table
    INSERT INTO database_administration_2019.AuditMail
    (Audit_Number ,Audit_User ,Audit_date ,New_ID_number ,Old_ID_number ,
   New_TypeID ,Old_TypeID ,New_SenderID ,Old_SenderID ,New_RecipientID ,Old_RecipientID ,
