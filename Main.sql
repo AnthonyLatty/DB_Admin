@@ -52,10 +52,12 @@ create table MailType(
 );
 
 create table Mail(
-  ID_number number references Customer(ID_number),
+  ID_number number primary key,
   TypeID number references MailType(TypeID),
-  SenderID number primary key not null,
-  RecipientID number,
+  SenderID number references Customer(ID_number),
+  RecipientID number references Customer(ID_number),
+  RecipientAddressID number references Address(AddressID),
+  EmployeeID number(9) references Employee(TRN),
   DateReceived date,
   DateAssigned date,
   DateDelivered date,
