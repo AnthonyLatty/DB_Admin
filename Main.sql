@@ -364,7 +364,8 @@ End sp_insertAddress;
 /
 
 -- Mail Table
- Create or replace procedure sp_insertMail(P_ID_number in number ,P_TypeID in number ,P_SenderID in number ,P_RecipientID in number,P_DateReceived in date, 
+ 
+ Create or replace procedure sp_insertMail(P_ID_number in number ,P_TypeID in number ,P_SenderID in number ,P_RecipientID in number,P_RecipientAddressID in varchar,P_EmployeeID in number,P_DateReceived in date, 
  P_DateAssigned in date, P_DateDelivered in date, P_Weight in number,P_StatusID in number )
 as
 
@@ -381,29 +382,29 @@ totalCost:=rating*P_weight;
 	
 
 if (TO_CHAR(sysdate, 'fmDAY')= 'WEDNESDAY') and (SYSDATE - TRUNC( SYSDATE ) BETWEEN 06/24 AND 19/24) then
-	insert into database_administration_2019.Mail(ID_number ,TypeID ,SenderID ,RecipientID ,DateReceived , DateAssigned , DateDelivered , Weight ,StatusID,cost )
+	insert into database_administration_2019.Mail(ID_number ,TypeID ,SenderID ,RecipientID, RecipientAddressID,EmployeeID ,DateReceived , DateAssigned , DateDelivered , Weight ,StatusID,cost )
 	values
-	(P_ID_number ,P_TypeID ,P_SenderID ,P_RecipientID ,P_DateReceived , P_DateAssigned , P_DateDelivered , P_Weight ,P_StatusID,totalcost);
+	(P_ID_number ,P_TypeID ,P_SenderID ,P_RecipientID, P_RecipientAddressID,P_EmployeeID ,P_DateReceived , P_DateAssigned , P_DateDelivered , P_Weight ,P_StatusID,totalcost);
 	
 Else if (TO_CHAR(sysdate, 'fmDAY')= 'MONDAY') and (SYSDATE - TRUNC( SYSDATE ) BETWEEN 06/24 AND 19/24) then
-	insert into database_administration_2019.Mail(ID_number ,TypeID ,SenderID ,RecipientID ,DateReceived , DateAssigned , DateDelivered , Weight ,StatusID,cost )
+	insert into database_administration_2019.Mail(ID_number ,TypeID ,SenderID ,RecipientID, RecipientAddressID,EmployeeID ,DateReceived , DateAssigned , DateDelivered , Weight ,StatusID,cost )
 	values
-	(P_ID_number ,P_TypeID ,P_SenderID ,P_RecipientID ,P_DateReceived , P_DateAssigned , P_DateDelivered , P_Weight ,P_StatusID,totalcost);
+	(P_ID_number ,P_TypeID ,P_SenderID ,P_RecipientID, P_RecipientAddressID,P_EmployeeID ,P_DateReceived , P_DateAssigned , P_DateDelivered , P_Weight ,P_StatusID,totalcost);
 	
 Else if (TO_CHAR(sysdate, 'fmDAY')= 'TUESDAY') and (SYSDATE - TRUNC( SYSDATE ) BETWEEN 06/24 AND 19/24) then
-	insert into database_administration_2019.Mail(ID_number ,TypeID ,SenderID ,RecipientID ,DateReceived , DateAssigned , DateDelivered , Weight ,StatusID,cost )
+	insert into database_administration_2019.Mail(ID_number ,TypeID ,SenderID ,RecipientID, RecipientAddressID,EmployeeID ,DateReceived , DateAssigned , DateDelivered , Weight ,StatusID,cost )
 	values
-	(P_ID_number ,P_TypeID ,P_SenderID ,P_RecipientID ,P_DateReceived , P_DateAssigned , P_DateDelivered , P_Weight ,P_StatusID,totalcost);
+	(P_ID_number ,P_TypeID ,P_SenderID ,P_RecipientID, P_RecipientAddressID,P_EmployeeID ,P_DateReceived , P_DateAssigned , P_DateDelivered , P_Weight ,P_StatusID,totalcost);
 	
 Else if (TO_CHAR(sysdate, 'fmDAY')= 'THURSDAY') and (SYSDATE - TRUNC( SYSDATE ) BETWEEN 06/24 AND 19/24) then
-	insert into database_administration_2019.Mail(ID_number ,TypeID ,SenderID ,RecipientID ,DateReceived , DateAssigned , DateDelivered , Weight ,StatusID,cost )
+	insert into database_administration_2019.Mail(ID_number ,TypeID ,SenderID ,RecipientID, RecipientAddressID,EmployeeID ,DateReceived , DateAssigned , DateDelivered , Weight ,StatusID,cost )
 	values
-	(P_ID_number ,P_TypeID ,P_SenderID ,P_RecipientID ,P_DateReceived , P_DateAssigned , P_DateDelivered , P_Weight ,P_StatusID,totalcost);
+	(P_ID_number ,P_TypeID ,P_SenderID ,P_RecipientID, P_RecipientAddressID,P_EmployeeID ,P_DateReceived , P_DateAssigned , P_DateDelivered , P_Weight ,P_StatusID,totalcost);
 	
 Else if (TO_CHAR(sysdate, 'fmDAY')= 'FRIDAY') and (SYSDATE - TRUNC( SYSDATE ) BETWEEN 06/24 AND 19/24) then
-	insert into database_administration_2019.Mail(ID_number ,TypeID ,SenderID ,RecipientID ,DateReceived , DateAssigned , DateDelivered , Weight ,StatusID,cost )
+	insert into database_administration_2019.Mail(ID_number ,TypeID ,SenderID ,RecipientID, RecipientAddressID,EmployeeID ,DateReceived , DateAssigned , DateDelivered , Weight ,StatusID,cost )
 	values
-	(P_ID_number ,P_TypeID ,P_SenderID ,P_RecipientID ,P_DateReceived , P_DateAssigned , P_DateDelivered , P_Weight ,P_StatusID,totalcost);
+	(P_ID_number ,P_TypeID ,P_SenderID ,P_RecipientID, P_RecipientAddressID,P_EmployeeID ,P_DateReceived , P_DateAssigned , P_DateDelivered , P_Weight ,P_StatusID,totalcost);
 	
 End if;
 end if;
@@ -1008,7 +1009,8 @@ End sp_UpdateAddress;
 
 
 -- Update to Mail Table
- Create or replace procedure sp_UpdateMail(P_ID_number in number ,P_TypeID in number ,P_SenderID in number ,P_RecipientID in number,P_DateReceived in date, 
+  
+ Create or replace procedure sp_UpdateMail(P_ID_number in number ,P_TypeID in number ,P_SenderID in number ,P_RecipientID in number,P_RecipientAddressID in varchar,P_EmployeeID in number,P_DateReceived in date, 
  P_DateAssigned in date, P_DateDelivered in date, P_Weight in number,P_StatusID in number )
 as
 
@@ -1029,6 +1031,8 @@ if (TO_CHAR(sysdate, 'fmDAY')= 'WEDNESDAY') and (SYSDATE - TRUNC( SYSDATE ) BETW
 	SET ID_number = P_ID_number,
     TypeID = P_TypeID,
 	RecipientID = P_RecipientID,
+	RecipientAddressID =P_RecipientAddressID ,
+	EmployeeID = P_EmployeeID ,
 	DateReceived = P_DateReceived,
 	DateAssigned = P_DateAssigned,
 	DateDelivered= P_DateDelivered,
@@ -1037,11 +1041,14 @@ if (TO_CHAR(sysdate, 'fmDAY')= 'WEDNESDAY') and (SYSDATE - TRUNC( SYSDATE ) BETW
 	Cost = totalCost
 	WHERE SenderID = P_SenderID;
 	
+	
 Else if (TO_CHAR(sysdate, 'fmDAY')= 'MONDAY') and (SYSDATE - TRUNC( SYSDATE ) BETWEEN 06/24 AND 19/24) then
 	UPDATE database_administration_2019.Mail
 	SET ID_number = P_ID_number,
     TypeID = P_TypeID,
 	RecipientID = P_RecipientID,
+	RecipientAddressID =P_RecipientAddressID ,
+	EmployeeID = P_EmployeeID ,
 	DateReceived = P_DateReceived,
 	DateAssigned = P_DateAssigned,
 	DateDelivered= P_DateDelivered,
@@ -1055,6 +1062,8 @@ Else if (TO_CHAR(sysdate, 'fmDAY')= 'TUESDAY') and (SYSDATE - TRUNC( SYSDATE ) B
 	SET ID_number = P_ID_number,
     TypeID = P_TypeID,
 	RecipientID = P_RecipientID,
+	RecipientAddressID =P_RecipientAddressID ,
+	EmployeeID = P_EmployeeID ,
 	DateReceived = P_DateReceived,
 	DateAssigned = P_DateAssigned,
 	DateDelivered= P_DateDelivered,
@@ -1068,6 +1077,8 @@ Else if (TO_CHAR(sysdate, 'fmDAY')= 'THURSDAY') and (SYSDATE - TRUNC( SYSDATE ) 
 	SET ID_number = P_ID_number,
     TypeID = P_TypeID,
 	RecipientID = P_RecipientID,
+	RecipientAddressID =P_RecipientAddressID ,
+	EmployeeID = P_EmployeeID ,
 	DateReceived = P_DateReceived,
 	DateAssigned = P_DateAssigned,
 	DateDelivered= P_DateDelivered,
@@ -1081,6 +1092,8 @@ Else if (TO_CHAR(sysdate, 'fmDAY')= 'FRIDAY') and (SYSDATE - TRUNC( SYSDATE ) BE
 	SET ID_number = P_ID_number,
     TypeID = P_TypeID,
 	RecipientID = P_RecipientID,
+	RecipientAddressID =P_RecipientAddressID ,
+	EmployeeID = P_EmployeeID ,
 	DateReceived = P_DateReceived,
 	DateAssigned = P_DateAssigned,
 	DateDelivered= P_DateDelivered,
@@ -1142,6 +1155,7 @@ End sp_UpdateStatus;
 -- Question 5
 
 -- Audit table for mail
+
 create table AuditMail(
   Audit_Number number primary key not null,
   Audit_User varchar2(50),
@@ -1154,6 +1168,10 @@ create table AuditMail(
   Old_SenderID number ,
   New_RecipientID number,
   Old_RecipientID number,
+  New_RecipientAddressID number ,
+  Old_RecipientAddressID number ,
+  New_EmployeeID number(9) ,
+  Old_EmployeeID number(9) ,
   New_DateReceived date,
   Old_DateReceived date,
   New_DateAssigned date,
@@ -1175,6 +1193,7 @@ minvalue 1
 maxvalue 10000;
 
 --- TRIGGER---
+
 CREATE OR REPLACE TRIGGER tr_AfterUpdateDeleteMail
 AFTER UPDATE or Delete 
    ON database_administration_2019.mail
@@ -1185,15 +1204,16 @@ DECLARE
 
 BEGIN
 
-	-- Find username of person performing UPDATE or delete on mail table--
+	--Find username of person performing UPDATE or delete on mail table--
     SELECT user INTO v_username FROM dual;
    
-   --I nsert record into audit table
+   --Insert record into audit table
+   
    INSERT INTO database_administration_2019.AuditMail
    (Audit_Number ,Audit_User ,Audit_date ,New_ID_number ,Old_ID_number ,
-  New_TypeID ,Old_TypeID ,New_SenderID ,Old_SenderID ,New_RecipientID ,Old_RecipientID ,
-  New_DateReceived ,Old_DateReceived ,New_DateAssigned ,Old_DateAssigned ,New_DateDelivered ,
-  Old_DateDelivered ,New_Weight ,Old_Weight ,New_StatusID ,Old_StatusID ,New_Cost ,Old_Cost 
+  New_TypeID ,Old_TypeID ,New_SenderID ,Old_SenderID ,New_RecipientID ,Old_RecipientID ,New_RecipientAddressID ,
+  Old_RecipientAddressID ,New_EmployeeID ,Old_EmployeeID ,New_DateReceived ,Old_DateReceived ,New_DateAssigned ,
+  Old_DateAssigned ,New_DateDelivered ,Old_DateDelivered ,New_Weight ,Old_Weight ,New_StatusID ,Old_StatusID ,New_Cost ,Old_Cost 
   )
    VALUES
    (Audit_Number.nextval,v_username,
@@ -1206,6 +1226,10 @@ BEGIN
   :old.SenderID  ,
   :new.RecipientID ,
   :old.RecipientID ,
+  :new.RecipientAddressID ,
+  :old.RecipientAddressID ,
+  :new.EmployeeID,
+  :old.EmployeeID,
   :new.DateReceived ,
   :old.DateReceived ,
   :new.DateAssigned ,
@@ -1223,5 +1247,3 @@ BEGIN
 END;
 
 /
-
---EXECUTE database_administration_2019.sp_UpdateMail(6,3,2,1,TO_DATE('1996/03/05', 'yyyy/mm/dd '),TO_DATE('1996/03/05', 'yyyy/mm/dd '),TO_DATE('1996/03/05', 'yyyy/mm/dd '),2,2);
