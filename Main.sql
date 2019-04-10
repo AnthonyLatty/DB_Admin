@@ -1247,3 +1247,79 @@ BEGIN
 END;
 
 /
+									
+										     --
+--profile that should be assigned to every regular user.
+--it automatically unlocks accounts that have been locked for 7 days due to entering an incorrect password more than 3 times
+create profile generalUser limit
+FAILED_LOGIN_ATTEMPTS 3
+PASSWORD_LOCK_TIME 7;
+
+--a profile that does the same as above with an unlock period of 1 minute.
+--to be used for demonstration purposes.
+create profile test limit
+FAILED_LOGIN_ATTEMPTS 3
+PASSWORD_LOCK_TIME 1/1440;
+										     
+--stored procedure that simulates mail being delivered
+CREATE or replace PROCEDURE sp_generate_mail(num_of_deliveries number, start_date date, end_date date) AS
+ID number;
+date_sent date;
+assigned_date date;
+delivery_date date;
+sender number;
+receiver number;
+address number;
+mailType number;
+weight number;
+cost number;
+x number :=0;
+tempStartDate pls_integer;
+tempEndDate pls_integer;
+employee number(9);
+	BEGIN
+		while (x < num_of_deliveries)
+		loop
+			tempStartDate :=TO_NUMBER(TO_CHAR(start_date, 'J'));
+			tempEndDate := TO_NUMBER(TO_CHAR(end_date, 'J'));
+			
+			date_sent := TO_DATE(TRUNC(DBMS_RANDOM.VALUE(tempStartDate, tempEndDate)), 'J');
+			
+			tempStartDate :=TO_NUMBER(TO_CHAR(date_sent, 'J'));
+			assigned_date :=TO_DATE(TRUNC(DBMS_RANDOM.VALUE(tempStartDate, tempEndDate)), 'J');
+			
+			tempStartDate :=TO_NUMBER(TO_CHAR(assigned_date, 'J'));
+			delivery_date :=TO_DATE(TRUNC(DBMS_RANDOM.VALUE(tempStartDate, tempEndDate)), 'J');
+			
+			
+		SELECT ID_Number into sender FROM  
+				( SELECT ID_Number FROM Customer  
+				ORDER BY DBMS_RANDOM.VALUE )  
+				WHERE ROWNUM = 1;
+		SELECT TRN into employee FROM  
+					( SELECT TRN FROM Employee  
+					ORDER BY DBMS_RANDOM.VALUE )  
+					WHERE ROWNUM = 1;
+		SELECT ID_Number into receiver FROM  
+					( SELECT ID_Number FROM Customer  
+					ORDER BY DBMS_RANDOM.VALUE )  
+					WHERE ROWNUM = 1;
+		select AddressID into address from 
+		Address where ID_number = receiver;			
+		SELECT TypeID into mailType FROM  
+				( SELECT TypeID FROM MailType  
+				ORDER BY DBMS_RANDOM.VALUE )  
+				WHERE ROWNUM = 1;
+		select floor(dbms_random.value(1,20)) into weight from dual;
+		select floor(dbms_random.value(1,1000)) into cost from dual;
+		select floor(dbms_random.value(1,10000)) into ID from dual;	
+		
+		insert into Mail(ID_number, TypeID, SenderID, RecipientID, RecipientAddressID, EmployeeID, DateReceived, DateAssigned, DateDelivered, Weight, Status, Cost)
+		values(ID, mailType, sender, receiver, address, employee, date_sent, assigned_date, delivery_date, weight, 'Delivered', cost);
+		x:=x+1;
+		end loop;
+
+	end;
+/									   
+										     
+-- execute procedure --> execute sp_generate_mail(10, date '1999-01-01', date '1999-12-31');					       
